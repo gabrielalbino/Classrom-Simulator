@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import agents.AlunoAgentInterface;
+import agents.AlunoStatus;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
@@ -26,18 +29,26 @@ public class SalaDeAulaController {
                 createAndShowGUI();
             }
         });
+	}
+	
+	// Retorna um mapa com o nome de cada aluno como chave e a nota e o status como valores.
+	private Map<String, AlunoStatus> getAlunosStatus(){
+		Map<String, AlunoStatus> map = new HashMap<String, AlunoStatus>();
+		
         for(int i = 0; i < alunos.size(); i++) {
         	try {
 				AlunoAgentInterface aluno = alunos.get(i).getO2AInterface(AlunoAgentInterface.class);
-				System.out.println(aluno.getNota());
+				map.put(aluno.getAlunoNome(), new AlunoStatus(aluno.getAlunoStatus(), aluno.getNota()));
         	} catch (StaleProxyException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	
         }
+        
+        return map;
 	}
 
+	// Cria o runtime JADE e 
 	private void createAndShowJade(int quantidadeAlunos) {
 		this.rt = jade.core.Runtime.instance();
 		Profile profile = new ProfileImpl();
@@ -48,7 +59,7 @@ public class SalaDeAulaController {
 		this.mainContainer = rt.createMainContainer(profile);
 		try {
 			for(int i = 0; i < quantidadeAlunos; i++) {
-				 AgentController ac = mainContainer.createNewAgent("aluno" + i,"agents.AlunoAgent",null);
+				 AgentController ac = mainContainer.createNewAgent("Aluno " + i,"agents.AlunoAgent",null);
 				 ac.start();
 				 alunos.add(ac);
 			}

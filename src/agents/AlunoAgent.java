@@ -10,8 +10,7 @@ public class AlunoAgent extends Agent implements AlunoAgentInterface {
 	}
 
 	protected void setup() {
-		System.out.println("Alo Mundo! ");
-		System.out.println("Meu nome: " + getLocalName());
+		System.out.println(getLocalName() + " entrou na sala!");
 		status = 0;
 		nota = 0;
 	}
@@ -24,6 +23,11 @@ public class AlunoAgent extends Agent implements AlunoAgentInterface {
 	@Override
 	public int getAlunoStatus() {
 		return status;
+	}
+
+	@Override
+	public String getAlunoNome() {
+		return getLocalName();
 	}
 	
 }
