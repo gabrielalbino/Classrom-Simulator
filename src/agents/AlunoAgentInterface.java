@@ -1,6 +1,6 @@
-package o2a;
+package agents;
 
 public interface AlunoAgentInterface {
-	public int getStatus();
 	public int getNota();
+	public int getAlunoStatus();
 }

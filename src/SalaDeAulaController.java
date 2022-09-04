@@ -4,10 +4,12 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import agents.AlunoAgentInterface;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 
 public class SalaDeAulaController {
 	private List<AgentController> alunos;
@@ -24,6 +26,16 @@ public class SalaDeAulaController {
                 createAndShowGUI();
             }
         });
+        for(int i = 0; i < alunos.size(); i++) {
+        	try {
+				AlunoAgentInterface aluno = alunos.get(i).getO2AInterface(AlunoAgentInterface.class);
+				System.out.println(aluno.getNota());
+        	} catch (StaleProxyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+        }
 	}
 
 	private void createAndShowJade(int quantidadeAlunos) {
