@@ -18,6 +18,8 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class Tela {
 
@@ -45,7 +47,7 @@ public class Tela {
 	private JTextField textField_17;
 	private JTextField textField_18;
 	private JTextField txtNerd_6;
-	private JTextField textField_20;
+	private JTextField txtAluno;
 	private JTextField txtMigu_2;
 	private JTextField txtMigu;
 	private JTextField txtMigu_6;
@@ -57,6 +59,10 @@ public class Tela {
 	private JTextField txtPergunta;
 	private JTextField txtViajando;
 	private JTextField txtForaDeSala;
+	private JTextField txtTempoRestante;
+	private JTextField txtNerd_7;
+	private JTextField txtMigu_8;
+	private JTextField txtPalestrinha;
 
 	/**
 	 * Launch the application.
@@ -90,6 +96,33 @@ public class Tela {
 		frame.setBounds(100, 100, 937, 506);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		txtPalestrinha = new JTextField();
+		txtPalestrinha.setText("Palestrinha");
+		txtPalestrinha.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPalestrinha.setEditable(false);
+		txtPalestrinha.setColumns(10);
+		txtPalestrinha.setBackground(UIManager.getColor("Button.select"));
+		txtPalestrinha.setBounds(325, 221, 114, 18);
+		frame.getContentPane().add(txtPalestrinha);
+		
+		txtMigu_8 = new JTextField();
+		txtMigu_8.setText("Migué");
+		txtMigu_8.setHorizontalAlignment(SwingConstants.CENTER);
+		txtMigu_8.setEditable(false);
+		txtMigu_8.setColumns(10);
+		txtMigu_8.setBackground(UIManager.getColor("Button.select"));
+		txtMigu_8.setBounds(173, 221, 114, 18);
+		frame.getContentPane().add(txtMigu_8);
+		
+		txtNerd_7 = new JTextField();
+		txtNerd_7.setText("NERD");
+		txtNerd_7.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNerd_7.setEditable(false);
+		txtNerd_7.setColumns(10);
+		txtNerd_7.setBackground(UIManager.getColor("Button.select"));
+		txtNerd_7.setBounds(24, 221, 114, 18);
+		frame.getContentPane().add(txtNerd_7);
 		
 		txtForaDeSala = new JTextField();
 		txtForaDeSala.setText("Fora de Sala");
@@ -302,16 +335,16 @@ public class Tela {
 		txtNerd_6.setBounds(484, 187, 139, 46);
 		frame.getContentPane().add(txtNerd_6);
 		
-		textField_20 = new JTextField();
-		textField_20.setText("Palestrinha");
-		textField_20.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_20.setEditable(false);
-		textField_20.setColumns(10);
-		textField_20.setBounds(312, 187, 139, 46);
-		frame.getContentPane().add(textField_20);
+		txtAluno = new JTextField();
+		txtAluno.setText("Aluno 3");
+		txtAluno.setHorizontalAlignment(SwingConstants.CENTER);
+		txtAluno.setEditable(false);
+		txtAluno.setColumns(10);
+		txtAluno.setBounds(312, 187, 139, 46);
+		frame.getContentPane().add(txtAluno);
 		
 		txtMigu_2 = new JTextField();
-		txtMigu_2.setText("Migué 🖐️");
+		txtMigu_2.setText("Aluno 2");
 		txtMigu_2.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMigu_2.setEditable(false);
 		txtMigu_2.setColumns(10);
@@ -320,7 +353,7 @@ public class Tela {
 		
 		txtMigu = new JTextField();
 		txtMigu.setFont(new Font("Dialog", Font.PLAIN, 12));
-		txtMigu.setText("NERD 🖐️");
+		txtMigu.setText("Aluno 1");
 		txtMigu.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMigu.setEditable(false);
 		txtMigu.setColumns(10);
@@ -374,5 +407,14 @@ public class Tela {
 		textField_28.setColumns(10);
 		textField_28.setBounds(12, 419, 139, 46);
 		frame.getContentPane().add(textField_28);
+		
+		txtTempoRestante = new JTextField();
+		txtTempoRestante.setFont(txtTempoRestante.getFont().deriveFont(txtTempoRestante.getFont().getStyle() | Font.BOLD));
+		txtTempoRestante.setText("Tempo Restante: 3 min");
+		txtTempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTempoRestante.setEditable(false);
+		txtTempoRestante.setColumns(10);
+		txtTempoRestante.setBounds(25, 56, 154, 50);
+		frame.getContentPane().add(txtTempoRestante);
 	}
 }
