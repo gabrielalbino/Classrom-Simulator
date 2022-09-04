@@ -1,4 +1,4 @@
-package agents;
+package agents.interfaces;
 
 public class AlunoInfo {
 	public AlunoInfo(int status, int nota){

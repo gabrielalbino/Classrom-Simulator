@@ -15,11 +15,13 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import jade.proto.AchieveREInitiator;
 
 public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 	private static final long serialVersionUID = -7358105736294185663L;
 	private int tipoConteudo;
 
+	protected AID aulaTopic, notasTopic, updateTopic;
 	public ProfessorAgent() {
 		// Register the interfaces that must be accessible by an external program through the O2A interface
 		registerO2AInterface(ProfessorAgentInterface.class, this);
@@ -33,9 +35,10 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 	
 			//registrando topic da aula
 			TopicManagementHelper topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
-			final AID aulaTopic = topicHelper.createTopic(Topics.AULA);
-			final AID notasTopic = topicHelper.createTopic(Topics.COMPUTA_NOTA);
-			
+
+			aulaTopic = topicHelper.createTopic(Topics.AULA);
+			notasTopic = topicHelper.createTopic(Topics.COMPUTA_NOTA);
+			updateTopic = topicHelper.createTopic(Topics.UPDATE_INTERFACE_REQUEST);
 			final TickerBehaviour contentUpdaterBehaviour = new TickerBehaviour(this, Time.AULA_TIME_STEP) {
 		        private static final long serialVersionUID = 7053736115204224490L;
 	
@@ -50,9 +53,10 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 					msg.addReceiver(aulaTopic);
 					msg.setContent("" + tipoConteudo);
 					myAgent.send(msg);
-					
+					System.out.println("Novo conteúdo (id: " + tipoConteudo + ")" );
 					/* Agenda a ação de atualizar notas*/
-					myAgent.addBehaviour(notasUpdaterBehaviour(notasTopic));
+					myAgent.addBehaviour(notasUpdaterBehaviour());
+					myAgent.addBehaviour(requestInterfaceUpdate());
 		        } 
 			};
 			
@@ -66,7 +70,7 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 	}
 	
 	private 
-	final WakerBehaviour notasUpdaterBehaviour(AID notasTopic) {
+	final WakerBehaviour notasUpdaterBehaviour() {
 		return (
 			new WakerBehaviour(this, Time.AULA_TIME_STEP/2) {
 
@@ -81,7 +85,19 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 		});
 	}
 	
-	
+
+	// Retorna um mapa com o nome de cada aluno como chave e a nota e o status como valores.
+	private TickerBehaviour requestInterfaceUpdate(){
+		return (new TickerBehaviour(this, Time.AULA_TIME_STEP/10) {
+	        private static final long serialVersionUID = 7053736115204224490L;
+
+			protected void onTick() {
+				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+				msg.addReceiver(updateTopic);
+				myAgent.send(msg);
+	        } 
+		});
+	}
 	
 	private void registerAulaService() {
 

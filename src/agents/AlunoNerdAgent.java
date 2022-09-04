@@ -26,7 +26,8 @@ public class AlunoNerdAgent extends AlunoAgent {
 			private static final long serialVersionUID = 1L;
 
 			/* Recebe as alterações de conteúdo e seta seu status de acordo.
-			 * Pode-se utilizar aleatórios (Math.Random()) para calcular as probabilidades de cada classe.
+			 * O Aluno nerd se comporta da seguinte maneira: Caso o conteudo esteja interessante, ele sempre presta atenção...
+			 * Caso seja irrelevante, ele tem uma probabilidade de 5% de sair da aula.
 			 * */
 			public void action() {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicAula));
@@ -50,43 +51,4 @@ public class AlunoNerdAgent extends AlunoAgent {
 		addAlunoBehaviour(handleContentUpdate);
 		
 	}
-	
-
-	/*
-	 * Adiciona os alunos como prestadores do serviço "sv-aluno" nas Páginas amarelas. Isso é util para acesso em outros agentes.
-	 * */
-	private void registerAlunoService() {
-
-		DFAgentDescription dfd = new DFAgentDescription();
-		dfd.setName(getAID());
-		ServiceDescription sd = new ServiceDescription();
-		sd.setName("sv-aluno");
-		sd.setType("aluno-forecast");
-		
-		dfd.addServices(sd);
-		
-		try {
-			DFService.register(this, dfd);
-		} catch (FIPAException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/* Métodos expostos pelo O2A */
-	@Override
-	public int getNota() {
-		return nota;
-	}
-
-	@Override
-	public int getAlunoStatus() {
-		return status;
-	}
-
-	@Override
-	public String getAlunoNome() {
-		return getLocalName();
-	}
-	
 }
