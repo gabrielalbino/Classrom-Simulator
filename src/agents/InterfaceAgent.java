@@ -3,6 +3,8 @@ package agents;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JLabel;
+
 import agents.interfaces.AlunoAgentInterface;
 import agents.interfaces.AlunoInfo;
 import constants.StatusAlunos;

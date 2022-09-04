@@ -56,13 +56,14 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 					System.out.println("Novo conteúdo (id: " + tipoConteudo + ")" );
 					/* Agenda a ação de atualizar notas*/
 					myAgent.addBehaviour(notasUpdaterBehaviour());
-					myAgent.addBehaviour(requestInterfaceUpdate());
+					
 		        } 
 			};
 			
 			
 			//Comportamento de update do tipo de conteudo
 		    addBehaviour(contentUpdaterBehaviour);
+		    addBehaviour(requestInterfaceUpdate());
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
