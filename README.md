@@ -36,4 +36,6 @@ A tabela abaixo compila as percepções e lições aprendidas por cada participa
 
 ## Fontes
 - Base Agentes / Comportamentos: https://jade.tilab.com/doc/tutorials/JADEProgramming-Tutorial-for-beginners.pdf
-- Base Swing: https://docs.oracle.com/javase/tutorial/uiswing/examples/start/HelloWorldSwingProject/src/start/HelloWorldSwing.java 
+- Base Swing: https://docs.oracle.com/javase/tutorial/uiswing/examples/start/HelloWorldSwingProject/src/start/HelloWorldSwing.java
+- Jade RUNTIME:  https://github.com/mihaimaruseac/JADE-ARIA/blob/master/src/examples/O2AInterface/O2AInterfaceExample.java
+- Jade Topics: https://github.com/mihaimaruseac/JADE-ARIA/blob/master/src/examples/topic/TopicMessageReceiverAgent.java
