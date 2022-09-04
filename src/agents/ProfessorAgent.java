@@ -1,15 +1,20 @@
 package agents;
+import agents.interfaces.ProfessorAgentInterface;
+import constants.StatusAula;
+import constants.Time;
+import constants.Topics;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.ServiceException;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.TickerBehaviour;
+import jade.core.behaviours.WakerBehaviour;
 import jade.core.messaging.TopicManagementHelper;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import util.StatusAula;
 
 public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 	private static final long serialVersionUID = -7358105736294185663L;
@@ -28,14 +33,13 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 	
 			//registrando topic da aula
 			TopicManagementHelper topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
-			final AID topic = topicHelper.createTopic("AULA");
+			final AID aulaTopic = topicHelper.createTopic(Topics.AULA);
+			final AID notasTopic = topicHelper.createTopic(Topics.COMPUTA_NOTA);
 			
-			//Comportamento de update do tipo de conteudo
-		    addBehaviour(new TickerBehaviour(this, 10000) {
+			final TickerBehaviour contentUpdaterBehaviour = new TickerBehaviour(this, Time.AULA_TIME_STEP) {
 		        private static final long serialVersionUID = 7053736115204224490L;
 	
 				protected void onTick() {
-					System.out.println("onTick");
 					if(tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE) {
 						tipoConteudo = StatusAula.CONTEUDO_IRRELEVANTE;
 					}
@@ -43,16 +47,40 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 						tipoConteudo = StatusAula.CONTEUDO_INTERESSANTE;
 					}
 					ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-					msg.addReceiver(topic);
+					msg.addReceiver(aulaTopic);
 					msg.setContent("" + tipoConteudo);
 					myAgent.send(msg);
+					
+					/* Agenda a ação de atualizar notas*/
+					myAgent.addBehaviour(notasUpdaterBehaviour(notasTopic));
 		        } 
-		      });
+			};
+			
+			
+			//Comportamento de update do tipo de conteudo
+		    addBehaviour(contentUpdaterBehaviour);
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	private 
+	final WakerBehaviour notasUpdaterBehaviour(AID notasTopic) {
+		return (
+			new WakerBehaviour(this, Time.AULA_TIME_STEP/2) {
+
+		    private static final long serialVersionUID = 1L;
+	
+		    protected void handleElapsedTimeout() {
+				ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+				msg.setContent("" + tipoConteudo);
+				msg.addReceiver(notasTopic);
+				myAgent.send(msg);
+		      } 
+		});
+	}
+	
 	
 	
 	private void registerAulaService() {

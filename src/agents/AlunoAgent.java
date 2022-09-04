@@ -1,7 +1,16 @@
 package agents;
+import java.util.concurrent.CyclicBarrier;
+
+import agents.interfaces.AlunoAgentInterface;
+import constants.StatusAlunos;
+import constants.StatusAula;
+import constants.Topics;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.ServiceException;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.core.messaging.TopicManagementHelper;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -9,15 +18,22 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import util.StatusAlunos;
-import util.StatusAula;
 
-public class AlunoAgent extends Agent implements AlunoAgentInterface {
+public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 	private static final long serialVersionUID = 1L;
-	private int status, nota;
-
+	/* Atributos do aluno
+	* Status: Estado atual do aluno, um dos valores de "
+	*
+	*/
+	protected int status;
+	protected int nota;
+	protected AID topicAula;
+	private AID topicNotas;
 	public AlunoAgent() {
-		// Register the interfaces that must be accessible by an external program through the O2A interface
+		/* Registra uma interface que vai permitir o acesso externo do agente por meio do O2A.
+		 * Caso deseje criar novos métodos para expor, deve-se editar o arquivo "AlunoAgentInterface" e implementar os métodos novos.
+		 * Para utilizar os métodos em uma classe externa, use alunoAgentObject.getO2AInterface(AlunoAgentInterface.class);
+		 */
 		registerO2AInterface(AlunoAgentInterface.class, this);
 	}
 
@@ -25,44 +41,75 @@ public class AlunoAgent extends Agent implements AlunoAgentInterface {
 		System.out.println(getLocalName() + " entrou na sala!");
 		status = StatusAlunos.AGUARDANDO_INICIO;
 		nota = 0;
+		
 		registerAlunoService();
-		
 
+		// Cria e registra o novo tópico que será utilizado pelo agente para receber as atualizações
+		TopicManagementHelper topicHelper;
 		try {
-			// Register to messages about topic "JADE"
-			TopicManagementHelper topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
-			final AID topic = topicHelper.createTopic("AULA");
-			topicHelper.register(topic);
-			
-			// Add a behaviour collecting messages about topic "JADE"
-			addBehaviour(new CyclicBehaviour(this) {
-				private static final long serialVersionUID = 1L;
-
-				public void action() {
-					ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topic));
-					if (msg != null) {
-						int statusAula = Integer.parseInt(msg.getContent());
-						if(statusAula == StatusAula.CONTEUDO_INTERESSANTE) {
-							status = StatusAlunos.PRESTANDO_ATENCAO;
-						}
-						else if(statusAula == StatusAula.CONTEUDO_IRRELEVANTE) {
-							status = StatusAlunos.VIAJANDO_NA_MAIONESE;
-						}
-					}
-					else {
-						block();
-					}
-				}
-			} );
+			topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
+			topicAula = topicHelper.createTopic(Topics.AULA);
+			topicNotas = topicHelper.createTopic(Topics.COMPUTA_NOTA);
+			topicHelper.register(topicAula);
+			topicHelper.register(topicNotas);
+		} catch (ServiceException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		catch (Exception e) {
-			System.err.println("Agent "+getLocalName()+": ERROR registering to topic \"JADE\"");
-			e.printStackTrace();
-		}
-		
 	}
 	
+	protected void addAlunoBehaviour(Behaviour updateBehaviour) {
+		/* Adiciona o comportamento de mudar seu proprio status durante as mudanças de conteudo
+		 * Ex: Implementa o que deve ser feito quando o conteúdo da aula for importante.
+		 * */
+		addBehaviour(updateBehaviour);
+		/* Adiciona o comportamento de atualizar sua propria nota de acordo com o status
+		 * */
+		addBehaviour(getComputaNotasBehaviour());
+	}
 
+	/*	Comportamento de atualizar a sua nota de acordo com seu proprio status:
+	 * Se o conteudo for interessante, o aluno ganha ponto se tiver prestando atenção
+	 * Se o conteúdo não for, o aluno ganha ponto se não estiver prestando atenção.
+	 * 
+	 * */
+	private CyclicBehaviour getComputaNotasBehaviour() {
+		return (new CyclicBehaviour(this) {
+			private static final long serialVersionUID = 1L;
+
+			public void action() {
+				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicNotas));
+				if (msg != null) {
+					int statusAula = Integer.parseInt(msg.getContent());
+					
+					switch(statusAula) {
+					case StatusAula.CONTEUDO_INTERESSANTE:
+						switch(status) {
+						case StatusAlunos.PRESTANDO_ATENCAO:
+							nota += 1;
+							break;
+						}
+						break;
+					case StatusAula.CONTEUDO_IRRELEVANTE:
+						switch (status) {
+						case StatusAlunos.PRESTANDO_ATENCAO:
+							break;
+						default:
+							nota += 1;
+						}
+					}
+					
+				}
+				else {
+					block();
+				}
+            } 
+		});
+	}
+	
+	/*
+	 * Adiciona os alunos como prestadores do serviço "sv-aluno" nas Páginas amarelas. Isso é util para acesso em outros agentes.
+	 * */
 	private void registerAlunoService() {
 
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -80,7 +127,15 @@ public class AlunoAgent extends Agent implements AlunoAgentInterface {
 			e.printStackTrace();
 		}
 	}
+	
+	/* Retorna uma das ações de acordo com a probabilidade... 
+	 * Ex: getActionByChance(0.3, Status.status1, Status.status2) = 30% de chance de ser estado1, 70% de chance de ser estado 2.
+	 * */
+	protected int getActionByChance(double chance, int action1, int action2) {
+		return Math.random() < chance ? action1 : action2; 
+	}
 
+	/* Métodos expostos pelo O2A */
 	@Override
 	public int getNota() {
 		return nota;

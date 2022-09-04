@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import agents.AlunoAgentInterface;
 import agents.AlunoInfo;
-import agents.ProfessorAgentInterface;
+import agents.interfaces.AlunoAgentInterface;
+import agents.interfaces.ProfessorAgentInterface;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
@@ -78,7 +78,7 @@ public class SalaDeAulaController {
 		this.mainContainer = rt.createMainContainer(profile);
 		try {
 			for(int i = 0; i < quantidadeAlunos; i++) {
-				 AgentController ac = mainContainer.createNewAgent("Aluno " + i,"agents.AlunoAgent",null);
+				 AgentController ac = mainContainer.createNewAgent("Aluno " + i,"agents.AlunoNerdAgent",null);
 				 ac.start();
 				 alunos.add(ac);
 			}

@@ -1,4 +1,4 @@
-package agents;
+package agents.interfaces;
 
 public interface AlunoAgentInterface {
 	public int getNota();
