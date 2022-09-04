@@ -1,8 +1,8 @@
-# Biblioteca de Estruturas de Dados (Prolog)
+# Simulador Sala De Aula (SMA)
 
 **Disciplina**: FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - T01 <br>
 **Nro do Grupo**: 01<br>
-**Paradigma**: Lógico<br>
+**Paradigma**: SMA<br>
 
 ## Alunos
 |Matrícula | Aluno |
