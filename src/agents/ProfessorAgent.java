@@ -55,7 +55,7 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 				private static final long serialVersionUID = 7053736115204224490L;
 
 				protected void onTick() {
-					if(step > Time.AULA_MAX_STEP) {
+					if(step >= Time.AULA_MAX_STEP) {
 						tipoConteudo = StatusAula.FINALIZADA;
 						return;
 					}

@@ -7,7 +7,6 @@ public class StatusAula {
 	public final static int CHAMANDO_ATENCAO = 3;
 	public final static int RECEBENDO_PALESTRINHA = 4;
 	public final static int RESPONDENDO_PERGUNTA = 5;
-
 	public final static int FINALIZADA = 6;
 
 	public static String getStatusName(int status) {

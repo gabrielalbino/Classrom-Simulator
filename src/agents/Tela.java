@@ -7,6 +7,9 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.UIManager;
 
+import constants.StatusAlunos;
+import constants.StatusAula;
+
 public class Tela {
 
 	JFrame frame;
@@ -53,31 +56,47 @@ public class Tela {
 		}
 		initialize();
 	}
+	
+	public void updateLabels() {
+		for (int i = 0; i < 18; i++) {
+			String tipoAluno;
+			if (i <= 3) {
+				tipoAluno = "Palestrinha";
+			} else if (i <= 5) {
+				tipoAluno = "Perguntador";
+			} else if (i <= 10) {
+				tipoAluno = "Conversador";
+			} else if (i <= 12) {
+				tipoAluno = "Migué";
+			} else if (i <= 15) {
+				tipoAluno = "Nerd";
+			} else {
+				tipoAluno = "Trabalhador";
+			}
+			changeStudentType(i, tipoAluno);
+		}
+	}
 
 	public void changeProfessorStatus(int valueStatus) {
+		String texto = StatusAula.getStatusName(valueStatus);
+		txtContedoInteressante.setText(texto);
 		switch(valueStatus) {
 		case 0 : 
-			txtContedoInteressante.setText("Iniciando Aula");
 			txtContedoInteressante.setBackground(new Color(0, 139, 139));
 			break;
 		case 1 : 
-			txtContedoInteressante.setText("Conteúdo Interessante");
 			txtContedoInteressante.setBackground(new Color(204, 102, 255));
 			break;
 		case 2 : 
-			txtContedoInteressante.setText("Conteúdo Irrelevante");
 			txtContedoInteressante.setBackground(new Color(204, 255, 102));
 			break;
 		case 3 : 
-			txtContedoInteressante.setText("Chamando Atenção");
 			txtContedoInteressante.setBackground(new Color(242,123,31));
 			break;
 		case 4 : 
-			txtContedoInteressante.setText("Recebendo Palestrinha");
 			txtContedoInteressante.setBackground(new Color(230,177,149));
 			break;
 		case 5 : 
-			txtContedoInteressante.setText("Respondendo Pergunta");
 			txtContedoInteressante.setBackground(new Color(190,242,126));
 			break;
 		default:
@@ -98,45 +117,37 @@ public class Tela {
 		teste = teste.replaceAll("\\D+","");
 		
 		aluno = Integer.parseInt(teste);
-		
+		String texto = StatusAlunos.getStatusName(valueStatus);
+		status[aluno].setText(texto);
 		
 		switch(valueStatus) {
 		case 0 : 
-			status[aluno].setText("Aguardando início");
 			status[aluno].setBackground(new Color(0, 139, 139));
 			break;
 		case 1 : 
-			status[aluno].setText("Prestando atenção");
 			status[aluno].setBackground(new Color(0, 255, 127));
 			break;
 		case 2 : 
-			status[aluno].setText("Viajando");
 			status[aluno].setBackground(new Color(255, 0, 102));
 			break;
 		case 3 : 
-			status[aluno].setText("Fora da sala");
 			status[aluno].setBackground(new Color(192, 192, 192));
 			break;
 		case 4 : 
-			status[aluno].setText("Dando palestrinha");
 			status[aluno].setBackground(new Color(30, 144, 255));
 			break;
 		case 5 : 
-			status[aluno].setText("Conversando");
 			status[aluno].setBackground(new Color(102, 102, 204));
 			break;
 		case 6 : 
-			status[aluno].setText("Perguntando");
 			status[aluno].setBackground(new Color(190,242,126));
 			break;
 		case 7 : 
-			status[aluno].setText("Trabalhando");
 			status[aluno].setBackground(new Color(176, 154, 230));
 			break;
 		default:
 			break;
 		}
-		
 		
 	}
 	
@@ -400,7 +411,7 @@ public class Tela {
 		txtTempoRestante = new JTextField();
 		txtTempoRestante.setBackground(new Color(255, 204, 153));
 		txtTempoRestante.setFont(txtTempoRestante.getFont().deriveFont(txtTempoRestante.getFont().getStyle() | Font.BOLD));
-		txtTempoRestante.setText("Tempo Restante: 3 min");
+		txtTempoRestante.setText("Etapa: 0/10");
 		txtTempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTempoRestante.setEditable(false);
 		txtTempoRestante.setColumns(10);

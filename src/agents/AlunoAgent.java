@@ -158,7 +158,7 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 		msg1.addReceiver(topicUpdateResponse);
 		msg1.setContent(getAlunoNome() + "/" + getAlunoStatus() + "/" + getNota());
 		send(msg1);
-		System.out.println(msg1);
+		//System.out.println(msg1);
 	}
 
 	/*

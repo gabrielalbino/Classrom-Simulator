@@ -34,13 +34,13 @@ public class AlunoPalestrinhaAgent extends AlunoAgent {
 
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							dispersao += Math.random() * 0.05;
+							dispersao += Math.random() * 0.1;
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							dispersao += Math.random() * 0.15;
+							dispersao += Math.random() * 0.2;
 							break;
 						case StatusAula.RESPONDENDO_PERGUNTA:
-							dispersao += Math.random() * 0.05;
+							dispersao += Math.random() * 0.1;
 							break;
 						case StatusAula.CHAMANDO_ATENCAO:
 							dispersao = 0;

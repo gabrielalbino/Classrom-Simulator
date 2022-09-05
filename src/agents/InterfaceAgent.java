@@ -62,7 +62,7 @@ public class InterfaceAgent extends Agent {
 		
 		Tela salaDeAula = new Tela();
 		salaDeAula.frame.setVisible(true);
-		
+		salaDeAula.updateLabels();
 		
 		/*
 	    int delay = 1000; //milliseconds
@@ -123,6 +123,7 @@ public class InterfaceAgent extends Agent {
 							} else {
 								// System.out.println(key + "----" + statusAlunos.get(key));
 								sala.changeProfessorStatus(statusAlunos.get(key).status);
+								sala.setTimeLeft(statusAlunos.get(key).nota);
 							}
 					}
 					

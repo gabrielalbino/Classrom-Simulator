@@ -42,10 +42,12 @@ public class SalaDeAulaController {
 					tipoAluno = "agents.AlunoPerguntadorAgent";
 				} else if (i <= 10) {
 					tipoAluno = "agents.AlunoConversadorAgent";
-				} else if (i <= 14) {
+				} else if (i <= 12) {
 					tipoAluno = "agents.AlunoMigueAgent";
-				} else {
+				} else if (i <= 15) {
 					tipoAluno = "agents.AlunoNerdAgent";
+				} else {
+					tipoAluno = "agents.AlunoTrabalhadorAgent";
 				}
 
 				AgentController ac = mainContainer.createNewAgent("Aluno " + i, tipoAluno, null);
