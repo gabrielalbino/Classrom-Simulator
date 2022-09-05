@@ -36,6 +36,8 @@ public class InterfaceAgent extends Agent {
 	private AID topicUpdate;
 	private AID topicUpdateRequest;
 	private AID topicUpdateResponse;
+	public JFrame frame;
+	public int teste = 0;
 	private AID topicUpdateAlunos;
 	private AID topicAlunos;
 	Map<String, AlunoInfo> statusAlunos;
@@ -102,7 +104,7 @@ public class InterfaceAgent extends Agent {
 		*/
 
 		
-		addBehaviour(getUpdateInterfaceBehaviour());
+		addBehaviour(getUpdateInterfaceBehaviour(salaDeAula));
 		addBehaviour(getUpdateDataBehaviour());
 		addBehaviour(getRequestInfoBehaviour());
 		
@@ -113,7 +115,7 @@ public class InterfaceAgent extends Agent {
 	 * Comportamento para atualizar a interface
 	 * 
 	 */
-	private CyclicBehaviour getUpdateInterfaceBehaviour() {
+	private CyclicBehaviour getUpdateInterfaceBehaviour(Tela sala) {
 		return (new CyclicBehaviour(this) {
 			private static final long serialVersionUID = 1L;
 
