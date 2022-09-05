@@ -71,19 +71,19 @@ public class Tela {
 
 	public void changeProfessorStatus(int valueStatus) {
 		switch(valueStatus) {
-		case 1 : 
-			txtContedoInteressante.setText("Trocar conteúdo");
+		case 0 : 
+			txtContedoInteressante.setText("Iniciando aula");
 			txtContedoInteressante.setBackground(new Color(0, 139, 139));
 			break;
-		case 2 : 
-			txtContedoInteressante.setText("Dar aula");
+		case 1 : 
+			txtContedoInteressante.setText("Conteúdo interessante");
 			txtContedoInteressante.setBackground(new Color(204, 102, 255));
 			break;
-		case 3 : 
-			txtContedoInteressante.setText("Responder alunos");
+		case 2 : 
+			txtContedoInteressante.setText("Conteúdo Irrelevante");
 			txtContedoInteressante.setBackground(new Color(204, 255, 102));
 			break;
-		case 4 : 
+		case 3 : 
 			txtContedoInteressante.setText("Medir atenção da turma");
 			txtContedoInteressante.setBackground(new Color(244,164,96));
 			break;
@@ -103,27 +103,27 @@ public class Tela {
 		
 		
 		switch(valueStatus) {
-		case 1 : 
-			status[aluno].setText("Prestar atenção");
+		case 0 : 
+			status[aluno].setText("Aguardando início");
 			status[aluno].setBackground(new Color(0, 139, 139));
 			break;
-		case 2 : 
-			status[aluno].setText("Trabalhar");
+		case 1 : 
+			status[aluno].setText("Prestando atenção");
 			status[aluno].setBackground(new Color(0, 255, 127));
 			break;
-		case 3 : 
-			status[aluno].setText("Fazer pergunta");
+		case 2 : 
+			status[aluno].setText("Viajando na maionese");
 			status[aluno].setBackground(new Color(255, 0, 102));
 			break;
-		case 4 : 
+		case 3 : 
 			status[aluno].setText("Fora da sala");
 			status[aluno].setBackground(new Color(192, 192, 192));
 			break;
-		case 5 : 
+		case 4 : 
 			status[aluno].setText("Viajando");
 			status[aluno].setBackground(new Color(30, 144, 255));
 			break;
-		case 6 : 
+		case 5 : 
 			status[aluno].setText("Conversar");
 			status[aluno].setBackground(new Color(102, 102, 204));
 			break;

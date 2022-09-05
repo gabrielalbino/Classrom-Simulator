@@ -119,10 +119,10 @@ public class InterfaceAgent extends Agent {
 					sala.changeProfessorStatus(teste);
 					for(String key : statusAlunos.keySet()){
 							if( !key.equals("professor") ) {
-						  System.out.println(key + "----" + statusAlunos.get(key));
+						  // System.out.println(key + "----" + statusAlunos.get(key));
 						  sala.changeStudentStatus(key, statusAlunos.get(key).status);
 							} else {
-								System.out.println(key + "----" + statusAlunos.get(key));
+								// System.out.println(key + "----" + statusAlunos.get(key));
 								sala.changeProfessorStatus(statusAlunos.get(key).status);
 							}
 					}
