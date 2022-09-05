@@ -25,28 +25,8 @@ public class SalaDeAulaController {
 	public SalaDeAulaController(int quantidadeAlunos) {
 		alunos = new ArrayList<AgentController>();
 		createAndShowJade(quantidadeAlunos);
-		// Create and set up the window.
-		frame = new JFrame("Simulador de sala de aula");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGUI();
-			}
-		});
-
 	}
 
-	private int getAulaTipoConteudo() {
-		try {
-			ProfessorAgentInterface professor = this.professor.getO2AInterface(ProfessorAgentInterface.class);
-			int tipoConteudo = professor.getTipoConteudo();
-			return tipoConteudo;
-		} catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return 0;
-	}
 
 	// Cria o runtime JADE e
 	private void createAndShowJade(int quantidadeAlunos) {
@@ -90,22 +70,6 @@ public class SalaDeAulaController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Create the GUI and show it. For thread safety,
-	 * this method should be invoked from the
-	 * event-dispatching thread.
-	 */
-	private void createAndShowGUI() {
-		// Add the ubiquitous "Hello World" label.
-
-		JLabel labelProfessor = new JLabel("Aula: " + getAulaTipoConteudo());
-		frame.getContentPane().add(labelProfessor);
-
-		// Display the window.
-		frame.pack();
-		frame.setVisible(true);
 	}
 
 }

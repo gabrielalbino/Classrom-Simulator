@@ -27,7 +27,7 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 	private static final long serialVersionUID = -7358105736294185663L;
 	private int tipoConteudo;
 	private int conteudoPausado;
-
+	private int steps = 10;
 	protected AID aulaTopic, alunosTopic, topicUpdateAlunos, notasTopic, updateTopic;
 	private AID topicUpdateRequest;
 	private AID topicUpdateResponse;
