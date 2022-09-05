@@ -68,6 +68,19 @@ public class InterfaceAgent extends Agent {
 		System.out.println("NERD 😀");
 		Tela salaDeAula = new Tela();
 		salaDeAula.frame.setVisible(true);
+		
+	    int delay = 1000; //milliseconds
+		
+	      ActionListener taskPerformer = new ActionListener() {
+	          public void actionPerformed(ActionEvent evt) {
+	              String date = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date(System.currentTimeMillis()));
+	              
+	              if (teste > 4) teste = 0;
+
+	              teste++;
+	          }
+	      };
+	      new Timer(delay, taskPerformer).start();
 
 		/*
 		EventQueue.invokeLater(new Runnable() {
@@ -86,7 +99,7 @@ public class InterfaceAgent extends Agent {
 		
 		addBehaviour(getUpdateInterfaceBehaviour(salaDeAula));
 		addBehaviour(getUpdateDataBehaviour());
-		addBehaviour(getRequestAlunosStatusBehaviour());
+		addBehaviour(getRequestAulasBehaviour());
 		
 
 	}
@@ -101,25 +114,24 @@ public class InterfaceAgent extends Agent {
 			public void action() {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdate));
 				if (msg != null) {
-					System.out.println(statusAlunos.toString());
-
-
+					// System.out.println(statusAlunos.toString());
+					sala.changeProfessorStatus(teste);
+					for(String key : statusAlunos.keySet()){
+							if( !key.equals("professor") ) {
+						  System.out.println(key + "----" + statusAlunos.get(key));
+						  sala.changeStudentStatus(key, statusAlunos.get(key).status);
+							} else {
+								System.out.println(key + "----" + statusAlunos.get(key));
+								sala.changeProfessorStatus(statusAlunos.get(key).status);
+							}
+					}
 				}
 				else {
 					block();
 				}
 				
-			    int delay = 1000; //milliseconds
-			      ActionListener taskPerformer = new ActionListener() {
-			          public void actionPerformed(ActionEvent evt) {
-			              String date = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date(System.currentTimeMillis()));
-			              
-			              if (teste > 4) teste = 0;
-			              sala.changeProfessorStatus(teste);
-			              teste++;
-			          }
-			      };
-			      new Timer(delay, taskPerformer).start();
+
+
 			      
 				
             } 
@@ -158,7 +170,7 @@ public class InterfaceAgent extends Agent {
 	}
 	
 	// Retorna um mapa com o nome de cada aluno como chave e a nota e o status como valores.
-	private TickerBehaviour getRequestAlunosStatusBehaviour(){
+	private TickerBehaviour getRequestAulasBehaviour(){
 		return (new TickerBehaviour(this, Time.AULA_TIME_STEP/10) {
 	        private static final long serialVersionUID = 7053736115204224490L;
 
@@ -169,4 +181,6 @@ public class InterfaceAgent extends Agent {
 	        } 
 		});
 	}
+	
+	
 }

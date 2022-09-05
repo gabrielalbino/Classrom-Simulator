@@ -92,7 +92,16 @@ public class Tela {
 		}
 	}
 	
-	public void changeStudentStatus(int aluno, int valueStatus) {
+	public void changeStudentStatus(String nome, int valueStatus) {
+		
+		int aluno = 0;
+		String teste = nome;
+		
+		teste = teste.replaceAll("\\D+","");
+		
+		aluno = Integer.parseInt(teste);
+		
+		
 		switch(valueStatus) {
 		case 1 : 
 			status[aluno].setText("Prestar atenção");

@@ -7,6 +7,7 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.ServiceException;
 import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.core.behaviours.WakerBehaviour;
 import jade.core.messaging.TopicManagementHelper;
@@ -15,6 +16,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.proto.AchieveREInitiator;
 
 public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
@@ -22,6 +24,8 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 	private int tipoConteudo;
 
 	protected AID aulaTopic, notasTopic, updateTopic;
+	private AID topicUpdateRequest;
+	private AID topicUpdateResponse;
 	public ProfessorAgent() {
 		// Register the interfaces that must be accessible by an external program through the O2A interface
 		registerO2AInterface(ProfessorAgentInterface.class, this);
@@ -39,6 +43,10 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 			aulaTopic = topicHelper.createTopic(Topics.AULA);
 			notasTopic = topicHelper.createTopic(Topics.COMPUTA_NOTA);
 			updateTopic = topicHelper.createTopic(Topics.UPDATE_INTERFACE_REQUEST);
+			topicUpdateRequest = topicHelper.createTopic(Topics.UPDATE_DATA_REQUEST);
+			topicUpdateResponse = topicHelper.createTopic(Topics.UPDATE_DATA_RESPONSE);
+			topicHelper.register(topicUpdateRequest);
+			topicHelper.register(topicUpdateResponse);
 			final TickerBehaviour contentUpdaterBehaviour = new TickerBehaviour(this, Time.AULA_TIME_STEP) {
 		        private static final long serialVersionUID = 7053736115204224490L;
 	
@@ -63,6 +71,7 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 			
 			//Comportamento de update do tipo de conteudo
 		    addBehaviour(contentUpdaterBehaviour);
+		    addBehaviour(getInfoBehaviour());
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,6 +147,27 @@ public class ProfessorAgent extends Agent  implements ProfessorAgentInterface {
 	public int getTipoConteudo() {
 		// TODO Auto-generated method stub
 		return tipoConteudo;
+	}
+	
+	private CyclicBehaviour getInfoBehaviour() {
+		return (new CyclicBehaviour(this) {
+			private static final long serialVersionUID = 1L;
+
+			public void action() {
+				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdateRequest));
+				if (msg != null) {
+					ACLMessage msg1 = new ACLMessage(ACLMessage.INFORM);
+					msg1.addReceiver(topicUpdateResponse);
+					msg1.setContent(getLocalName() + "/" + tipoConteudo + "/0");
+					myAgent.send(msg1);
+					//System.out.println(msg1);
+
+				}
+				else {
+					block();
+				}
+            } 
+		});
 	}
 	
 }
