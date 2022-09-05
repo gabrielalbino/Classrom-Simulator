@@ -76,13 +76,13 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 					msg.addReceiver(aulaTopic);
 					msg.setContent("" + tipoConteudo);
 					myAgent.send(msg);
-					System.out.println("Novo conteúdo (id: " + tipoConteudo + ")");
+					steps--;
+					System.out.println("Novo conteúdo (id: " + tipoConteudo + "), etapa: "+ steps);
 					/* Agenda a ação de atualizar notas */
 					myAgent.addBehaviour(notasUpdaterBehaviour());
 					myAgent.addBehaviour(classCheckerBehaviour());
 				}
 			};
-			
 			
 			//Comportamento de update do tipo de conteudo
 		    addBehaviour(contentUpdaterBehaviour);
@@ -172,6 +172,7 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 			}
 		});
 	}
+	
 
 	private void registerAulaService() {
 
@@ -222,7 +223,7 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 				if (msg != null) {
 					ACLMessage msg1 = new ACLMessage(ACLMessage.INFORM);
 					msg1.addReceiver(topicUpdateResponse);
-					msg1.setContent(getLocalName() + "/" + tipoConteudo + "/0");
+					msg1.setContent(getLocalName() + "/" + tipoConteudo + "/" + steps);
 					myAgent.send(msg1);
 					//System.out.println(msg1);
 

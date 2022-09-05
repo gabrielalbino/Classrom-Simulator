@@ -115,29 +115,24 @@ public class InterfaceAgent extends Agent {
 	 * Comportamento para atualizar a interface
 	 * 
 	 */
-	private CyclicBehaviour getUpdateInterfaceBehaviour(Tela sala) {
-		return (new CyclicBehaviour(this) {
+	private TickerBehaviour getUpdateInterfaceBehaviour(Tela sala) {
+		return (new TickerBehaviour(this, 1000) {
 			private static final long serialVersionUID = 1L;
 
-			public void action() {
-				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdate));
-				if (msg != null) {
-					// System.out.println(statusAlunos.toString());
-					sala.changeProfessorStatus(teste);
-					for(String key : statusAlunos.keySet()){
-							if( !key.equals("professor") ) {
-						  // System.out.println(key + "----" + statusAlunos.get(key));
-						  sala.changeStudentStatus(key, statusAlunos.get(key).status);
-							} else {
-								// System.out.println(key + "----" + statusAlunos.get(key));
-								sala.changeProfessorStatus(statusAlunos.get(key).status);
-							}
-					}
+			public void onTick() {
+				// System.out.println(statusAlunos.toString());
+				sala.changeProfessorStatus(teste);
+				for(String key : statusAlunos.keySet()){
+						if( !key.equals("professor") ) {
+							// System.out.println(key + "----" + statusAlunos.get(key));
+							sala.changeStudentStatus(key, statusAlunos.get(key).status);
+						} else {
+							System.out.println(key + "----" + statusAlunos.get(key).nota);
+							sala.changeProfessorStatus(statusAlunos.get(key).status);
+							sala.setTimeLeft(statusAlunos.get(key).nota);
+						}
 				}
-				else {
-					block();
-				}
-            } 
+			}
 		});
 	}
 

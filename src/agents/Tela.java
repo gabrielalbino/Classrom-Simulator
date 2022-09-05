@@ -28,7 +28,7 @@ public class Tela {
 	private JTextField txtProfessora;
 	private JTextField txtContedoInteressante;
 	private JTextField txtTempoRestante;
-
+	private int timeLeft;
 	
 	private JTextField[] alunos = new JTextField[18];
 	private JTextField[] tipo = new JTextField[18];
@@ -90,6 +90,11 @@ public class Tela {
 		default:
 			break;
 		}
+	}
+	
+	public void setTimeLeft(int timeLeft) {
+		this.timeLeft = timeLeft;
+		txtTempoRestante.setText("Etapa: " + this.timeLeft + "/10");
 	}
 	
 	public void changeStudentStatus(String nome, int valueStatus) {
@@ -386,7 +391,7 @@ public class Tela {
 		txtTempoRestante = new JTextField();
 		txtTempoRestante.setBackground(new Color(255, 204, 153));
 		txtTempoRestante.setFont(txtTempoRestante.getFont().deriveFont(txtTempoRestante.getFont().getStyle() | Font.BOLD));
-		txtTempoRestante.setText("Tempo Restante: 3 min");
+		txtTempoRestante.setText("Tempo Restante: " + this.timeLeft + " s");
 		txtTempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTempoRestante.setEditable(false);
 		txtTempoRestante.setColumns(10);

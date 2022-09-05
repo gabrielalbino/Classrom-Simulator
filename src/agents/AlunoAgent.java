@@ -11,6 +11,7 @@ import jade.core.ServiceException;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SerialBehaviour;
 import jade.core.messaging.TopicManagementHelper;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -19,6 +20,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.proto.AchieveREInitiator;
+import jade.util.leap.Collection;
 
 public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 	private static final long serialVersionUID = 1L;
@@ -75,7 +77,6 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 		addBehaviour(getComputaNotasBehaviour());
 		/* Adiciona o comportamento de responder requisições de atualização com sua nota e status
 		 * */
-		addBehaviour(getInfoBehaviour());
 	}
 
 	/*	Comportamento de atualizar a sua nota de acordo com seu proprio status:
@@ -108,6 +109,7 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 							nota += 1;
 						}
 					}
+					sendInfo();
 					
 				}
 				else {
@@ -119,25 +121,12 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 
 	/*	Comportamento que responde informações de nota e status do aluno quando requisitado
 	 * */
-	private CyclicBehaviour getInfoBehaviour() {
-		return (new CyclicBehaviour(this) {
-			private static final long serialVersionUID = 1L;
-
-			public void action() {
-				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdateRequest));
-				if (msg != null) {
-					ACLMessage msg1 = new ACLMessage(ACLMessage.INFORM);
-					msg1.addReceiver(topicUpdateResponse);
-					msg1.setContent(getAlunoNome() + "/" + getAlunoStatus() + "/" + getNota());
-					myAgent.send(msg1);
-					//System.out.println(msg1);
-
-				}
-				else {
-					block();
-				}
-            } 
-		});
+	private void sendInfo() {
+		ACLMessage msg1 = new ACLMessage(ACLMessage.INFORM);
+		msg1.addReceiver(topicUpdateResponse);
+		msg1.setContent(getAlunoNome() + "/" + getAlunoStatus() + "/" + getNota());
+		send(msg1);
+		//System.out.println(msg1);
 	}
 	/*
 	 * Adiciona os alunos como prestadores do serviço "sv-aluno" nas Páginas amarelas. Isso é util para acesso em outros agentes.
