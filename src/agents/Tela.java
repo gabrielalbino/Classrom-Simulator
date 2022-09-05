@@ -138,8 +138,16 @@ public class Tela {
 		tipo[aluno].setText(textValue);
 	}
 	
-	public void changeStudentName(int aluno, int nota, String textValue) {
-		alunos[aluno].setText(textValue + " - " + nota);
+	public void changeStudentName(String nome, int nota) {
+		
+		int aluno = 0;
+		String teste = nome;
+		
+		teste = teste.replaceAll("\\D+","");
+		
+		aluno = Integer.parseInt(teste);
+		
+		alunos[aluno].setText(nome + " - " + nota);
 	}
 	
 	/**
@@ -287,14 +295,14 @@ public class Tela {
 		tipo[4].setBounds(173, 294, 114, 18);
 		frame.getContentPane().add(tipo[4]);
 		
-		tipo[3] = new JTextField();
-		tipo[3].setText("Pergunta");
-		tipo[3].setHorizontalAlignment(SwingConstants.CENTER);
-		tipo[3].setEditable(false);
-		tipo[3].setColumns(10);
-		tipo[3].setBackground(new Color(102, 205, 170));
-		tipo[3].setBounds(24, 251, 114, 18);
-		frame.getContentPane().add(tipo[3]);
+		status[3] = new JTextField();
+		status[3].setText("Pergunta");
+		status[3].setHorizontalAlignment(SwingConstants.CENTER);
+		status[3].setEditable(false);
+		status[3].setColumns(10);
+		status[3].setBackground(new Color(102, 205, 170));
+		status[3].setBounds(24, 251, 114, 18);
+		frame.getContentPane().add(status[3]);
 		
 		tipo[2] = new JTextField();
 		tipo[2].setText("Palestrinha");
@@ -402,14 +410,14 @@ public class Tela {
 		tipo[3].setBounds(24, 294, 114, 18);
 		frame.getContentPane().add(tipo[3]);
 		
-		tipo[3] = new JTextField();
-		tipo[3].setText("Aluno 4");
-		tipo[3].setHorizontalAlignment(SwingConstants.CENTER);
-		tipo[3].setFont(new Font("Dialog", Font.PLAIN, 12));
-		tipo[3].setEditable(false);
-		tipo[3].setColumns(10);
-		tipo[3].setBounds(12, 260, 139, 46);
-		frame.getContentPane().add(tipo[3]);
+		alunos[3] = new JTextField();
+		alunos[3].setText("Aluno 4");
+		alunos[3].setHorizontalAlignment(SwingConstants.CENTER);
+		alunos[3].setFont(new Font("Dialog", Font.PLAIN, 12));
+		alunos[3].setEditable(false);
+		alunos[3].setColumns(10);
+		alunos[3].setBounds(12, 260, 139, 46);
+		frame.getContentPane().add(alunos[3]);
 		
 		status[4] = new JTextField();
 		status[4].setText("Viajando");
@@ -445,14 +453,14 @@ public class Tela {
 		alunos[5].setBounds(312, 260, 139, 46);
 		frame.getContentPane().add(alunos[5]);
 		
-		status[15] = new JTextField();
-		status[15].setText("Perguntando");
-		status[15].setHorizontalAlignment(SwingConstants.CENTER);
-		status[15].setEditable(false);
-		status[15].setColumns(10);
-		status[15].setBackground(new Color(102, 205, 170));
-		status[15].setBounds(498, 178, 114, 18);
-		frame.getContentPane().add(status[15]);
+		status[14] = new JTextField();
+		status[14].setText("Perguntando");
+		status[14].setHorizontalAlignment(SwingConstants.CENTER);
+		status[14].setEditable(false);
+		status[14].setColumns(10);
+		status[14].setBackground(new Color(102, 205, 170));
+		status[14].setBounds(498, 178, 114, 18);
+		frame.getContentPane().add(status[14]);
 		
 		alunos[15] = new JTextField();
 		alunos[15].setText("Aluno 16");
@@ -498,7 +506,7 @@ public class Tela {
 		frame.getContentPane().add(alunos[17]);
 		
 		status[15] = new JTextField();
-		status[15].setText("Perguntando");
+		status[15].setText("Pergu");
 		status[15].setHorizontalAlignment(SwingConstants.CENTER);
 		status[15].setEditable(false);
 		status[15].setColumns(10);

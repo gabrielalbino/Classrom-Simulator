@@ -76,6 +76,8 @@ public class InterfaceAgent extends Agent {
 		Tela salaDeAula = new Tela();
 		salaDeAula.frame.setVisible(true);
 		
+		
+		/*
 	    int delay = 1000; //milliseconds
 		
 	      ActionListener taskPerformer = new ActionListener() {
@@ -88,7 +90,8 @@ public class InterfaceAgent extends Agent {
 	          }
 	      };
 	      new Timer(delay, taskPerformer).start();
-
+	      /*
+	      
 		/*
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -123,11 +126,12 @@ public class InterfaceAgent extends Agent {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdate));
 				if (msg != null) {
 					// System.out.println(statusAlunos.toString());
-					sala.changeProfessorStatus(teste);
+					// sala.changeProfessorStatus(teste);
 					for(String key : statusAlunos.keySet()){
 							if( !key.equals("professor") ) {
 						  // System.out.println(key + "----" + statusAlunos.get(key));
 						  sala.changeStudentStatus(key, statusAlunos.get(key).status);
+						  sala.changeStudentName(key, statusAlunos.get(key).nota);
 							} else {
 								// System.out.println(key + "----" + statusAlunos.get(key));
 								sala.changeProfessorStatus(statusAlunos.get(key).status);
