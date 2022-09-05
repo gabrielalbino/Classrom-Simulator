@@ -25,14 +25,7 @@ public class SalaDeAulaController {
 	public SalaDeAulaController(int quantidadeAlunos) {
 		alunos = new ArrayList<AgentController>();
 		createAndShowJade(quantidadeAlunos);
-        //Create and set up the window.
-        frame = new JFrame("Simulador de sala de aula");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+
 
 
 	}
@@ -97,6 +90,8 @@ public class SalaDeAulaController {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+        
+        
     }
 
 }

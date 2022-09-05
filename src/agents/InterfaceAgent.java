@@ -1,7 +1,15 @@
 package agents;
 
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.Timer;
 
 import agents.interfaces.AlunoAgentInterface;
 import agents.interfaces.AlunoInfo;
@@ -28,7 +36,8 @@ public class InterfaceAgent extends Agent {
 	private AID topicUpdateRequest;
 	private AID topicUpdateResponse;
 	Map<String, AlunoInfo> statusAlunos;
-	
+	public JFrame frame;
+	public int teste = 0;
 	protected void setup() {
 		statusAlunos = new HashMap<String, AlunoInfo>();
 		// Cria e registra o novo tópico que será utilizado pelo agente para receber as atualizações
@@ -45,16 +54,47 @@ public class InterfaceAgent extends Agent {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		/*
+        frame = new JFrame("Simulador de sala de aula");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel labelProfessor = new JLabel("Aula: " + "Teste");
+        frame.getContentPane().add(labelProfessor);
+ 
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+        */
 		
-		addBehaviour(getUpdateInterfaceBehaviour());
+		System.out.println("NERD 😀");
+		Tela salaDeAula = new Tela();
+		salaDeAula.frame.setVisible(true);
+
+		/*
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					System.out.println("NERD 😀");
+					Tela salaDeAula = new Tela();
+					salaDeAula.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		*/
+
+		
+		addBehaviour(getUpdateInterfaceBehaviour(salaDeAula));
 		addBehaviour(getUpdateDataBehaviour());
 		addBehaviour(getRequestAlunosStatusBehaviour());
+		
+
 	}
 	
 	/*	Comportamento para atualizar a interface
 	 * 
 	 * */
-	private CyclicBehaviour getUpdateInterfaceBehaviour() {
+	private CyclicBehaviour getUpdateInterfaceBehaviour(Tela sala) {
 		return (new CyclicBehaviour(this) {
 			private static final long serialVersionUID = 1L;
 
@@ -62,10 +102,26 @@ public class InterfaceAgent extends Agent {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdate));
 				if (msg != null) {
 					System.out.println(statusAlunos.toString());
+
+
 				}
 				else {
 					block();
 				}
+				
+			    int delay = 1000; //milliseconds
+			      ActionListener taskPerformer = new ActionListener() {
+			          public void actionPerformed(ActionEvent evt) {
+			              String date = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date(System.currentTimeMillis()));
+			              
+			              if (teste > 4) teste = 0;
+			              sala.changeProfessorStatus(teste);
+			              teste++;
+			          }
+			      };
+			      new Timer(delay, taskPerformer).start();
+			      
+				
             } 
 		});
 	}
