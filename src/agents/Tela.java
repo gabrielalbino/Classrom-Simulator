@@ -85,15 +85,15 @@ public class Tela {
 			break;
 		case 3 : 
 			txtContedoInteressante.setText("Chamando Atenção");
-			txtContedoInteressante.setBackground(new Color(244,164,96));
+			txtContedoInteressante.setBackground(new Color(242,123,31));
 			break;
 		case 4 : 
 			txtContedoInteressante.setText("Recebendo Palestrinha");
-			txtContedoInteressante.setBackground(new Color(244,164,96));
+			txtContedoInteressante.setBackground(new Color(230,177,149));
 			break;
 		case 5 : 
 			txtContedoInteressante.setText("Respondendo Pergunta");
-			txtContedoInteressante.setBackground(new Color(244,164,96));
+			txtContedoInteressante.setBackground(new Color(190,242,126));
 			break;
 		default:
 			break;
@@ -137,11 +137,11 @@ public class Tela {
 			break;
 		case 6 : 
 			status[aluno].setText("Perguntando");
-			status[aluno].setBackground(new Color(255, 0, 102));
+			status[aluno].setBackground(new Color(190,242,126));
 			break;
 		case 7 : 
 			status[aluno].setText("Trabalhando");
-			status[aluno].setBackground(new Color(192, 192, 192));
+			status[aluno].setBackground(new Color(176, 154, 230));
 			break;
 		default:
 			break;

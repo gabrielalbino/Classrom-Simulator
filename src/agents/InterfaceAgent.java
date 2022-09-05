@@ -132,12 +132,16 @@ public class InterfaceAgent extends Agent {
 						  // System.out.println(key + "----" + statusAlunos.get(key));
 						  sala.changeStudentName(key, statusAlunos.get(key).nota);
 						  sala.changeStudentStatus(key, statusAlunos.get(key).status);
+						  sala.frame.revalidate();
+						  sala.frame.repaint();
 
 							} else {
 								// System.out.println(key + "----" + statusAlunos.get(key));
 								sala.changeProfessorStatus(statusAlunos.get(key).status);
 							}
 					}
+					
+
 				}
 				else {
 					block();
