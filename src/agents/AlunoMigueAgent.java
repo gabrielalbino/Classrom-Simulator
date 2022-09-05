@@ -37,13 +37,22 @@ public class AlunoMigueAgent extends AlunoAgent {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicAula));
 				if (msg != null) {
 					int statusAula = Integer.parseInt(msg.getContent());
+
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							setStatus(getActionByChance(0.25, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO));
+							dispersao += Math.random() * 0.1;
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							setStatus(getActionByChance(0.5, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO));
+							dispersao += Math.random() * 0.3;
+							break;
+						case StatusAula.RESPONDENDO_PERGUNTA:
+							dispersao += Math.random() * 0.2;
+							break;
+						case StatusAula.CHAMANDO_ATENCAO:
+							dispersao = 0;
+							break;
 					}
+					setStatus(getActionByChance(dispersao, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO));
 				} else {
 					block();
 				}

@@ -37,13 +37,29 @@ public class AlunoPerguntadorAgent extends AlunoAgent {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicAula));
 				if (msg != null) {
 					int statusAula = Integer.parseInt(msg.getContent());
+
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							setStatus(getActionByChance(0.15, StatusAlunos.PERGUNTANDO, StatusAlunos.PRESTANDO_ATENCAO));
+							dispersao += Math.random() * 0.05;
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							setStatus(getActionByChance(0.05, StatusAlunos.PERGUNTANDO, StatusAlunos.PRESTANDO_ATENCAO));
+							dispersao += Math.random() * 0.15;
+							break;
+						case StatusAula.RESPONDENDO_PERGUNTA:
+							dispersao += Math.random() * 0.05;
+							break;
+						case StatusAula.CHAMANDO_ATENCAO:
+							dispersao = 0;
+							break;
 					}
+
+					if (dispersao < 0.25) {
+						setStatus(getActionByChance(0.15, StatusAlunos.PERGUNTANDO,
+								StatusAlunos.PRESTANDO_ATENCAO));
+					} else {
+						setStatus(StatusAlunos.PRESTANDO_ATENCAO);
+					}
+
 				} else {
 					block();
 				}
