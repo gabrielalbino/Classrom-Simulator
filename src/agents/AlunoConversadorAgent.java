@@ -14,10 +14,10 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-public class AlunoPalestrinhaAgent extends AlunoAgent {
+public class AlunoConversadorAgent extends AlunoAgent {
 	private static final long serialVersionUID = 1L;
 
-	public AlunoPalestrinhaAgent() {
+	public AlunoConversadorAgent() {
 		super();
 	}
 
@@ -39,11 +39,10 @@ public class AlunoPalestrinhaAgent extends AlunoAgent {
 					int statusAula = Integer.parseInt(msg.getContent());
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							status = getActionByChance(0.2, StatusAlunos.DANDO_PALESTRINHA,
-									StatusAlunos.PRESTANDO_ATENCAO);
+							status = getActionByChance(0.1, StatusAlunos.CONVERSANDO, StatusAlunos.PRESTANDO_ATENCAO);
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							status = getActionByChance(0.05, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO);
+							status = getActionByChance(0.4, StatusAlunos.CONVERSANDO, StatusAlunos.PRESTANDO_ATENCAO);
 					}
 				} else {
 					block();

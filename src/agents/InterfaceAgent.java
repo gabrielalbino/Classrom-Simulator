@@ -109,6 +109,7 @@ public class InterfaceAgent extends Agent {
 					System.out.println("MSG no interface " + reqAlunos.getContent());
 					int alunosDispersos = 0;
 					int palestrinha = 0; // 0 - Sem palestrinha / 1 - Com palestrinha
+					int perguntando = 0; // 0 - Ninguém perguntando / 1 - Aluno perguntando
 					int status;
 
 					for (Map.Entry<String, AlunoInfo> entry : statusAlunos.entrySet()) {
@@ -116,13 +117,17 @@ public class InterfaceAgent extends Agent {
 						if (status == StatusAlunos.DANDO_PALESTRINHA) {
 							palestrinha = 1;
 						}
+						if (status == StatusAlunos.PERGUNTANDO) {
+							perguntando = 1;
+						}
 						if (status == StatusAlunos.CONVERSANDO || status == StatusAlunos.VIAJANDO_NA_MAIONESE) {
 							alunosDispersos += 1;
 						}
 					}
 					ACLMessage msgAlunos = new ACLMessage(ACLMessage.INFORM);
-					System.out.println("Dispersos: " + alunosDispersos + " Palestrinha: " + palestrinha);
-					msgAlunos.setContent(alunosDispersos + "/" + palestrinha);
+					System.out.println("Dispersos: " + alunosDispersos + " Palestrinha: " + palestrinha
+							+ " Perguntando: " + perguntando);
+					msgAlunos.setContent(alunosDispersos + "/" + palestrinha + "/" + perguntando);
 					msgAlunos.addReceiver(topicAlunos);
 					myAgent.send(msgAlunos);
 				} else {

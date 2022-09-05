@@ -7,6 +7,7 @@ public class StatusAlunos {
 	public final static int FORA_DA_SALA = 3;
 	public final static int DANDO_PALESTRINHA = 4;
 	public final static int CONVERSANDO = 5;
+	public final static int PERGUNTANDO = 6;
 
 	public static String getStatusName(int status) {
 		switch (status) {
@@ -22,6 +23,8 @@ public class StatusAlunos {
 				return "Dando palestrinha";
 			case CONVERSANDO:
 				return "Conversando";
+			case PERGUNTANDO:
+				return "Perguntando";
 			default:
 				return "" + status;
 		}

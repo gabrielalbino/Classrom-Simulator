@@ -65,8 +65,14 @@ public class SalaDeAulaController {
 
 			for (int i = 0; i < quantidadeAlunos; i++) {
 				String tipoAluno;
-				if (i < 5) {
+				if (i <= 3) {
 					tipoAluno = "agents.AlunoPalestrinhaAgent";
+				} else if (i <= 5) {
+					tipoAluno = "agents.AlunoPerguntadorAgent";
+				} else if (i <= 14) {
+					tipoAluno = "agents.AlunoConversadorAgent";
+				} else if (i <= 18) {
+					tipoAluno = "agents.AlunoMigueAgent";
 				} else {
 					tipoAluno = "agents.AlunoNerdAgent";
 				}

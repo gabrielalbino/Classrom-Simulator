@@ -101,6 +101,7 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 					String[] content = alunosMsg.getContent().split("/");
 					int alunosDispersos = Integer.parseInt(content[0]);
 					int palestrinha = Integer.parseInt(content[1]);
+					int perguntando = Integer.parseInt(content[2]);
 					System.out.println("Palestrinhas " + palestrinha + " Dispersos" + alunosDispersos);
 					if (palestrinha == 1) {
 						if (tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE
@@ -108,20 +109,31 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 							conteudoPausado = tipoConteudo;
 						}
 						tipoConteudo = StatusAula.RECEBENDO_PALESTRINHA;
-						if (alunosDispersos > 5) {
-							if (tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE
-									|| tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE) {
-								conteudoPausado = tipoConteudo;
-							}
-							tipoConteudo = StatusAula.CHAMANDO_ATENCAO;
-						}
-					} else {
-						System.out.println("Null no professor ");
-						block();
+						return;
 					}
+					if (perguntando == 1) {
+						if (tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE
+								|| tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE) {
+							conteudoPausado = tipoConteudo;
+						}
+						tipoConteudo = StatusAula.RESPONDENDO_PERGUNTA;
+						return;
+					}
+					if (alunosDispersos > 5) {
+						if (tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE
+								|| tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE) {
+							conteudoPausado = tipoConteudo;
+						}
+						tipoConteudo = StatusAula.CHAMANDO_ATENCAO;
+						return;
+					}
+				} else {
+					System.out.println("Null no professor ");
+					block();
 				}
 			}
 		});
+
 	}
 
 	private final WakerBehaviour notasUpdaterBehaviour() {
