@@ -69,6 +69,8 @@ public class InterfaceAgent extends Agent {
 		Tela salaDeAula = new Tela();
 		salaDeAula.frame.setVisible(true);
 		
+		
+		/*
 	    int delay = 1000; //milliseconds
 		
 	      ActionListener taskPerformer = new ActionListener() {
@@ -79,7 +81,8 @@ public class InterfaceAgent extends Agent {
 	          }
 	      };
 	      new Timer(delay, taskPerformer).start();
-
+	      /*
+	      
 		/*
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -111,17 +114,25 @@ public class InterfaceAgent extends Agent {
 			private static final long serialVersionUID = 1L;
 
 			public void onTick() {
-				// System.out.println(statusAlunos.toString());
-				sala.changeProfessorStatus(teste);
-				for(String key : statusAlunos.keySet()){
-						if( !key.equals("professor") ) {
-							// System.out.println(key + "----" + statusAlunos.get(key));
-							sala.changeStudentStatus(key, statusAlunos.get(key).status);
-						} else {
-							System.out.println(key + "----" + statusAlunos.get(key).nota);
-							sala.changeProfessorStatus(statusAlunos.get(key).status);
-							sala.setTimeLeft(statusAlunos.get(key).nota);
-						}
+				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdate));
+				if (msg != null) {
+					// System.out.println(statusAlunos.toString());
+					// sala.changeProfessorStatus(teste);
+					for(String key : statusAlunos.keySet()){
+							if( !key.equals("professor") ) {
+						  // System.out.println(key + "----" + statusAlunos.get(key));
+						  sala.changeStudentName(key, statusAlunos.get(key).nota);
+						  sala.changeStudentStatus(key, statusAlunos.get(key).status);
+						  sala.frame.revalidate();
+						  sala.frame.repaint();
+
+							} else {
+								// System.out.println(key + "----" + statusAlunos.get(key));
+								sala.changeProfessorStatus(statusAlunos.get(key).status);
+							}
+					}
+					
+
 				}
 			}
 		});
