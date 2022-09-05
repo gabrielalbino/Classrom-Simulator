@@ -36,15 +36,33 @@ public class AlunoPalestrinhaAgent extends AlunoAgent {
 			public void action() {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicAula));
 				if (msg != null) {
+
 					int statusAula = Integer.parseInt(msg.getContent());
+
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							status = getActionByChance(0.2, StatusAlunos.DANDO_PALESTRINHA,
-									StatusAlunos.PRESTANDO_ATENCAO);
+							dispersao += Math.random() * 0.05;
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							status = getActionByChance(0.05, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO);
+							dispersao += Math.random() * 0.15;
+							break;
+						case StatusAula.RESPONDENDO_PERGUNTA:
+							dispersao += Math.random() * 0.05;
+							break;
+						case StatusAula.CHAMANDO_ATENCAO:
+							dispersao = 0;
+							break;
 					}
+					status = getActionByChance(dispersao, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO);
+
+					if (dispersao < 0.2) {
+						status = getActionByChance(dispersao, StatusAlunos.DANDO_PALESTRINHA,
+								StatusAlunos.PRESTANDO_ATENCAO);
+					} else {
+						status = getActionByChance(0.1, StatusAlunos.FORA_DA_SALA,
+								StatusAlunos.PRESTANDO_ATENCAO);
+					}
+
 				} else {
 					block();
 				}
