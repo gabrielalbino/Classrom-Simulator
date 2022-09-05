@@ -27,7 +27,6 @@ public class AlunoTrabalhadorAgent extends AlunoAgent {
 		
 		Behaviour handleContentUpdate = new CyclicBehaviour(this) {
 			private static final long serialVersionUID = 1L;
-			private boolean tenhoQueTrabalhar=true;
 
 			/* Recebe as alteraÃ§Ãµes de conteÃºdo e seta seu status de acordo.
 			 * O Aluno trabalhador se comporta da seguinte maneira: Caso o conteudo esteja interessante, ele sempre presta atenÃ§Ã£o...
@@ -42,21 +41,11 @@ public class AlunoTrabalhadorAgent extends AlunoAgent {
 					switch(statusAula) {
 					case StatusAula.CONTEUDO_INTERESSANTE:
 						status = StatusAlunos.PRESTANDO_ATENCAO;
-						this.tenhoQueTrabalhar=false;
+						
 						break;
 					case StatusAula.CONTEUDO_IRRELEVANTE:		
 						status = getActionByChance(0.70, StatusAlunos.TRABALHANDO, StatusAlunos.PRESTANDO_ATENCAO);
-						if(status == StatusAlunos.TRABALHANDO) {
-							this.tenhoQueTrabalhar=true;
-						}
-						else {
-							
-							if(this.tenhoQueTrabalhar==true) {
-								// chama o tick pra ficar um tempo trabalhando
-								
-							}
-							
-						}
+						
 					}
 				}
 				else {
