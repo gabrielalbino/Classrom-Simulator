@@ -49,9 +49,9 @@ public class SalaDeAulaController {
 					tipoAluno = "agents.AlunoPalestrinhaAgent";
 				} else if (i <= 5) {
 					tipoAluno = "agents.AlunoPerguntadorAgent";
-				} else if (i <= 14) {
+				} else if (i <= 10) {
 					tipoAluno = "agents.AlunoConversadorAgent";
-				} else if (i <= 18) {
+				} else if (i <= 14) {
 					tipoAluno = "agents.AlunoMigueAgent";
 				} else {
 					tipoAluno = "agents.AlunoNerdAgent";
