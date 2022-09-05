@@ -23,14 +23,26 @@
 A tabela abaixo sintetiza, nas palavras do contribuidor, as contribuições acompanhadas de sua respectiva significância.
 |Nome do Membro | Contribuição | Significância da Contribuição para o Projeto (Excelente/Boa/Regular/Ruim/Nula) |
 | -- | ---- | - |
-| | | |
+| Arthur Paiva Tavares  | ***** |Boa |
+| Bruno Carmo Nunes  | ***** | Boa |
+| Gabriel Batista Albino Silva |*****|Boa |
+| Nathalia Lorena Cardoso Dias  | ***** | Boa |
+| Nicolas Georgeos Mantzos  |*****| Boa |
+| Sofia Costa Patrocinio  |***** | Boa |
+| Wellington Jonathan de Souza Rodrigues  |*****| Boa |
 
 ## Percepções gerais, lições aprendidas, fragilidades superadas...
 A tabela abaixo compila as percepções e lições aprendidas por cada participante no desenvolvimento do segundo módulo do projeto.
 
 |Nome do Membro | Comentário | 
 | -- | ---- |
-| |  | 
+| Arthur Paiva Tavares  |***** |
+| Bruno Carmo Nunes  | ***** |
+| Gabriel Batista Albino Silva |*****|
+| Nathalia Lorena Cardoso Dias  |*****|
+| Nicolas Georgeos Mantzos  | *****   |
+| Sofia Costa Patrocinio  |*****  |
+| Wellington Jonathan de Souza Rodrigues  |***** |
 
 ## Trabalhos Futuros
 
