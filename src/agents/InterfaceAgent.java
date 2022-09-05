@@ -121,10 +121,10 @@ public class InterfaceAgent extends Agent {
 					for(String key : statusAlunos.keySet()){
 							if( !key.equals("professor") ) {
 						  // System.out.println(key + "----" + statusAlunos.get(key));
-						  sala.changeStudentName(key, statusAlunos.get(key).nota);
-						  sala.changeStudentStatus(key, statusAlunos.get(key).status);
-						  sala.frame.revalidate();
-						  sala.frame.repaint();
+							  sala.changeStudentName(key, statusAlunos.get(key).nota);
+							  sala.changeStudentStatus(key, statusAlunos.get(key).status);
+							  sala.frame.revalidate();
+							  sala.frame.repaint();
 
 							} else {
 								// System.out.println(key + "----" + statusAlunos.get(key));
@@ -150,9 +150,9 @@ public class InterfaceAgent extends Agent {
 				if (msg != null) {
 					String[] content = msg.getContent().split("/");
 					String nome = content[0];
-					System.out.println(nome);
 					int status = Integer.parseInt(content[1]);
 					int nota = Integer.parseInt(content[2]);
+					System.out.println(nome + " " + status);
 					AlunoInfo info = new AlunoInfo(status, nota);
 					if (statusAlunos.get(nome) != null) {
 						statusAlunos.replace(nome, info);
@@ -199,7 +199,7 @@ public class InterfaceAgent extends Agent {
 	
 	// Retorna um mapa com o nome de cada aluno como chave e a nota e o status como valores.
 	private TickerBehaviour getRequestInfoBehaviour(){
-		return (new TickerBehaviour(this, Time.AULA_TIME_STEP/10) {
+		return (new TickerBehaviour(this, Time.AULA_TIME_STEP/3) {
 	        private static final long serialVersionUID = 7053736115204224490L;
 
 			protected void onTick() {
