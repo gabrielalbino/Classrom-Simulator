@@ -85,7 +85,7 @@ public class Tela {
 			break;
 		case 4 : 
 			txtContedoInteressante.setText("Medir atenção da turma");
-			txtContedoInteressante.setBackground(new Color(153, 51, 51));
+			txtContedoInteressante.setBackground(new Color(244,164,96));
 			break;
 		default:
 			break;
@@ -129,8 +129,8 @@ public class Tela {
 		tipo[aluno].setText(textValue);
 	}
 	
-	public void changeStudentName(int aluno, String textValue) {
-		alunos[aluno].setText(textValue);
+	public void changeStudentName(int aluno, int nota, String textValue) {
+		alunos[aluno].setText(textValue + " - " + nota);
 	}
 	
 	/**
@@ -162,7 +162,7 @@ public class Tela {
 		frame.getContentPane().add(tipo[10]);
 		
 		status[6] = new JTextField();
-		status[6].setText("Pergunta");
+		status[6].setText("Perguntando");
 		status[6].setHorizontalAlignment(SwingConstants.CENTER);
 		status[6].setEditable(false);
 		status[6].setColumns(10);
@@ -171,7 +171,7 @@ public class Tela {
 		frame.getContentPane().add(status[6]);
 		
 		status[9] = new JTextField();
-		status[9].setText("Pergunta");
+		status[9].setText("Perguntando");
 		status[9].setHorizontalAlignment(SwingConstants.CENTER);
 		status[9].setEditable(false);
 		status[9].setColumns(10);
@@ -336,7 +336,7 @@ public class Tela {
 		status[0].setBackground(new Color(102, 205, 170));
 		status[0].setEditable(false);
 		status[0].setHorizontalAlignment(SwingConstants.CENTER);
-		status[0].setText("Pergunta");
+		status[0].setText("Perguntando");
 		status[0].setBounds(24, 178, 114, 18);
 		frame.getContentPane().add(status[0]);
 		status[0].setColumns(10);
@@ -437,7 +437,7 @@ public class Tela {
 		frame.getContentPane().add(alunos[5]);
 		
 		status[15] = new JTextField();
-		status[15].setText("Pergunta");
+		status[15].setText("Perguntando");
 		status[15].setHorizontalAlignment(SwingConstants.CENTER);
 		status[15].setEditable(false);
 		status[15].setColumns(10);
@@ -489,7 +489,7 @@ public class Tela {
 		frame.getContentPane().add(alunos[17]);
 		
 		status[15] = new JTextField();
-		status[15].setText("Pergunta");
+		status[15].setText("Perguntando");
 		status[15].setHorizontalAlignment(SwingConstants.CENTER);
 		status[15].setEditable(false);
 		status[15].setColumns(10);
