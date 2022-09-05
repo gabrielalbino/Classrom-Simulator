@@ -1,6 +1,5 @@
 package agents;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -8,27 +7,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.Timer;
 
 
-import agents.interfaces.AlunoAgentInterface;
 import agents.interfaces.AlunoInfo;
 import constants.StatusAlunos;
-import constants.StatusAula;
 import constants.Time;
 import constants.Topics;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.ServiceException;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.ParallelBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.core.messaging.TopicManagementHelper;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.proto.AchieveREInitiator;
-import jade.wrapper.StaleProxyException;
 
 public class InterfaceAgent extends Agent {
 
@@ -80,8 +73,6 @@ public class InterfaceAgent extends Agent {
 		
 	      ActionListener taskPerformer = new ActionListener() {
 	          public void actionPerformed(ActionEvent evt) {
-	              String date = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date(System.currentTimeMillis()));
-	              
 	              if (teste > 4) teste = 0;
 
 	              teste++;

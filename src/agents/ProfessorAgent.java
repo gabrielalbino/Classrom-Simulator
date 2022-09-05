@@ -1,7 +1,5 @@
 package agents;
 
-import java.util.Map;
-
 import agents.interfaces.ProfessorAgentInterface;
 import constants.StatusAula;
 import constants.Time;
@@ -9,7 +7,6 @@ import constants.Topics;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.ServiceException;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.core.behaviours.WakerBehaviour;
@@ -20,14 +17,12 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.proto.AchieveREInitiator;
-import jade.lang.acl.MessageTemplate;
 
 public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 	private static final long serialVersionUID = -7358105736294185663L;
 	private int tipoConteudo;
 	private int conteudoPausado;
-	private int steps = 10;
+	private int step = 0;
 	protected AID aulaTopic, alunosTopic, topicUpdateAlunos, notasTopic, updateTopic;
 	private AID topicUpdateRequest;
 	private AID topicUpdateResponse;
@@ -60,10 +55,16 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 				private static final long serialVersionUID = 7053736115204224490L;
 
 				protected void onTick() {
+					if(step > Time.AULA_MAX_STEP) {
+						tipoConteudo = StatusAula.FINALIZADA;
+						return;
+					}
 					System.out.println("Status da Aula: " + tipoConteudo);
 					if (tipoConteudo == StatusAula.RECEBENDO_PALESTRINHA
+							|| tipoConteudo == StatusAula.RESPONDENDO_PERGUNTA
 							|| tipoConteudo == StatusAula.CHAMANDO_ATENCAO) {
-						tipoConteudo = conteudoPausado;
+						tipoConteudo = conteudoPausado != 0 ? conteudoPausado 
+							: StatusAula.CONTEUDO_INTERESSANTE;
 						System.out.println("Retornando conteúdo (id: " + tipoConteudo + ")");
 						return;
 					}
@@ -76,8 +77,8 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 					msg.addReceiver(aulaTopic);
 					msg.setContent("" + tipoConteudo);
 					myAgent.send(msg);
-					steps--;
-					System.out.println("Novo conteúdo (id: " + tipoConteudo + "), etapa: "+ steps);
+					step++;
+					System.out.println("Novo conteúdo (id: " + tipoConteudo + "), etapa: "+ step);
 					/* Agenda a ação de atualizar notas */
 					myAgent.addBehaviour(notasUpdaterBehaviour());
 					myAgent.addBehaviour(classCheckerBehaviour());
@@ -111,7 +112,7 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 					int alunosDispersos = Integer.parseInt(content[0]);
 					int palestrinha = Integer.parseInt(content[1]);
 					int perguntando = Integer.parseInt(content[2]);
-					System.out.println("Palestrinhas " + palestrinha + " Dispersos" + alunosDispersos);
+					System.out.println("Palestrinhas " + palestrinha + " Dispersos " + alunosDispersos + " Perguntando " + perguntando);
 					if (palestrinha == 1) {
 						if (tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE
 								|| tipoConteudo == StatusAula.CONTEUDO_INTERESSANTE) {
@@ -137,7 +138,6 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 						return;
 					}
 				} else {
-					System.out.println("Null no professor ");
 					block();
 				}
 			}
@@ -192,22 +192,6 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 		}
 	}
 
-	private DFAgentDescription[] getAlunosFromYellowPages() {
-		try {
-			// Build the description used as template for the search
-			DFAgentDescription template = new DFAgentDescription();
-			ServiceDescription templateSd = new ServiceDescription();
-			templateSd.setType("weather-forecast");
-			template.addServices(templateSd);
-
-			DFAgentDescription[] results = DFService.search(this, template);
-			return results;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	@Override
 	public int getTipoConteudo() {
 		// TODO Auto-generated method stub
@@ -223,7 +207,7 @@ public class ProfessorAgent extends Agent implements ProfessorAgentInterface {
 				if (msg != null) {
 					ACLMessage msg1 = new ACLMessage(ACLMessage.INFORM);
 					msg1.addReceiver(topicUpdateResponse);
-					msg1.setContent(getLocalName() + "/" + tipoConteudo + "/" + steps);
+					msg1.setContent(getLocalName() + "/" + tipoConteudo + "/" + step);
 					myAgent.send(msg1);
 					//System.out.println(msg1);
 

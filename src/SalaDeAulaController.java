@@ -1,19 +1,10 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import agents.interfaces.AlunoAgentInterface;
-import agents.interfaces.AlunoInfo;
-import agents.interfaces.ProfessorAgentInterface;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
-import jade.wrapper.StaleProxyException;
 
 public class SalaDeAulaController {
 	private List<AgentController> alunos;

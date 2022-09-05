@@ -2,15 +2,8 @@ package agents;
 
 import constants.StatusAlunos;
 import constants.StatusAula;
-import jade.core.AID;
-import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.messaging.TopicManagementHelper;
-import jade.domain.DFService;
-import jade.domain.FIPAException;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -60,7 +53,7 @@ public class AlunoPalestrinhaAgent extends AlunoAgent {
 								StatusAlunos.PRESTANDO_ATENCAO));
 					} else {
 						setStatus(getActionByChance(0.1, StatusAlunos.FORA_DA_SALA,
-								StatusAlunos.PRESTANDO_ATENCAO()));
+								StatusAlunos.PRESTANDO_ATENCAO));
 					}
 
 				} else {

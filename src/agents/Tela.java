@@ -1,25 +1,10 @@
 package agents;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JCheckBox;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import javax.swing.JTextPane;
 import java.awt.Font;
-import javax.swing.JLabel;
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.SystemColor;
 import javax.swing.UIManager;
 
 public class Tela {

@@ -1,7 +1,5 @@
 package agents;
 
-import java.util.concurrent.CyclicBarrier;
-
 import agents.interfaces.AlunoAgentInterface;
 import constants.StatusAlunos;
 import constants.StatusAula;
@@ -12,9 +10,7 @@ import jade.core.Agent;
 import jade.core.ServiceException;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SequentialBehaviour;
-import jade.core.behaviours.SerialBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.core.messaging.TopicManagementHelper;
 import jade.domain.DFService;
@@ -23,8 +19,6 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.proto.AchieveREInitiator;
-import jade.util.leap.Collection;
 
 public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 	private static final long serialVersionUID = 1L;
