@@ -26,6 +26,8 @@ public class StatusAlunos {
 				return "Conversando";
 			case PERGUNTANDO:
 				return "Perguntando";
+			case TRABALHANDO:
+				return "Trabalhando";	
 			default:
 				return "" + status;
 		}
