@@ -39,10 +39,10 @@ public class AlunoMigueAgent extends AlunoAgent {
 					int statusAula = Integer.parseInt(msg.getContent());
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							status = getActionByChance(0.25, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO);
+							setStatus(getActionByChance(0.25, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO));
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							status = getActionByChance(0.5, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO);
+							setStatus(getActionByChance(0.5, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO));
 					}
 				} else {
 					block();

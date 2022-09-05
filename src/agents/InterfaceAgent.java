@@ -143,12 +143,12 @@ public class InterfaceAgent extends Agent {
 	private CyclicBehaviour getUpdateDataBehaviour() {
 		return (new CyclicBehaviour(this) {
 			private static final long serialVersionUID = 1L;
-
 			public void action() {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicUpdateResponse));
 				if (msg != null) {
 					String[] content = msg.getContent().split("/");
 					String nome = content[0];
+					System.out.println(nome);
 					int status = Integer.parseInt(content[1]);
 					int nota = Integer.parseInt(content[2]);
 					AlunoInfo info = new AlunoInfo(status, nota);

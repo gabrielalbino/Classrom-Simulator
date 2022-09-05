@@ -41,11 +41,11 @@ public class AlunoTrabalhadorAgent extends AlunoAgent {
 					
 					switch(statusAula) {
 					case StatusAula.CONTEUDO_INTERESSANTE:
-						status = StatusAlunos.PRESTANDO_ATENCAO;
+						setStatus(StatusAlunos.PRESTANDO_ATENCAO);
 						this.tenhoQueTrabalhar=false;
 						break;
 					case StatusAula.CONTEUDO_IRRELEVANTE:		
-						status = getActionByChance(0.70, StatusAlunos.TRABALHANDO, StatusAlunos.PRESTANDO_ATENCAO);
+						setStatus(getActionByChance(0.70, StatusAlunos.TRABALHANDO, StatusAlunos.PRESTANDO_ATENCAO));
 						if(status == StatusAlunos.TRABALHANDO) {
 							this.tenhoQueTrabalhar=true;
 						}

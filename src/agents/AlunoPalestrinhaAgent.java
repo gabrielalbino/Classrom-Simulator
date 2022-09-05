@@ -39,11 +39,11 @@ public class AlunoPalestrinhaAgent extends AlunoAgent {
 					int statusAula = Integer.parseInt(msg.getContent());
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							status = getActionByChance(0.2, StatusAlunos.DANDO_PALESTRINHA,
-									StatusAlunos.PRESTANDO_ATENCAO);
+							setStatus(getActionByChance(0.2, StatusAlunos.DANDO_PALESTRINHA,
+									StatusAlunos.PRESTANDO_ATENCAO));
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							status = getActionByChance(0.05, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO);
+							setStatus(getActionByChance(0.05, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO));
 					}
 				} else {
 					block();

@@ -4,6 +4,7 @@ import java.util.concurrent.CyclicBarrier;
 import agents.interfaces.AlunoAgentInterface;
 import constants.StatusAlunos;
 import constants.StatusAula;
+import constants.Time;
 import constants.Topics;
 import jade.core.AID;
 import jade.core.Agent;
@@ -11,7 +12,9 @@ import jade.core.ServiceException;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.SequentialBehaviour;
 import jade.core.behaviours.SerialBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.core.messaging.TopicManagementHelper;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -29,6 +32,7 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 	*
 	*/
 	protected int status;
+	private int notaAntiga, statusAntigo;
 	protected int nota;
 	protected AID topicAula;
 	protected AID topicNotas;
@@ -67,11 +71,28 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 		}
 	}
 	
+	protected TickerBehaviour updateInterfaceBehaviour() {
+		return(	new TickerBehaviour(this, Time.AULA_TIME_STEP/4) {
+				private static final long serialVersionUID = 7053736115204224490L;
+
+				protected void onTick() {
+					if(statusAntigo != status) {
+						sendInfo();
+					}
+				}
+			});
+	};
+	
 	protected void addAlunoBehaviour(Behaviour updateBehaviour) {
 		/* Adiciona o comportamento de mudar seu proprio status durante as mudanças de conteudo
 		 * Ex: Implementa o que deve ser feito quando o conteúdo da aula for importante.
 		 * */
-		addBehaviour(updateBehaviour);
+		SequentialBehaviour updateBehaviourComposite = new SequentialBehaviour(this);
+		updateBehaviourComposite.addSubBehaviour(updateBehaviour);
+		updateBehaviourComposite.addSubBehaviour(updateInterfaceBehaviour());
+		
+		
+		addBehaviour(updateBehaviourComposite);
 		/* Adiciona o comportamento de atualizar sua propria nota de acordo com o status
 		 * */
 		addBehaviour(getComputaNotasBehaviour());
@@ -91,6 +112,7 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 			public void action() {
 				ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topicNotas));
 				if (msg != null) {
+					
 					int statusAula = Integer.parseInt(msg.getContent());
 					
 					switch(statusAula) {
@@ -109,8 +131,10 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 							nota += 1;
 						}
 					}
-					sendInfo();
 					
+					if(notaAntiga != nota)
+						sendInfo();
+					notaAntiga = nota;
 				}
 				else {
 					block();
@@ -121,12 +145,12 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 
 	/*	Comportamento que responde informações de nota e status do aluno quando requisitado
 	 * */
-	private void sendInfo() {
+	protected void sendInfo() {
 		ACLMessage msg1 = new ACLMessage(ACLMessage.INFORM);
 		msg1.addReceiver(topicUpdateResponse);
 		msg1.setContent(getAlunoNome() + "/" + getAlunoStatus() + "/" + getNota());
 		send(msg1);
-		//System.out.println(msg1);
+		System.out.println(msg1);
 	}
 	/*
 	 * Adiciona os alunos como prestadores do serviço "sv-aluno" nas Páginas amarelas. Isso é util para acesso em outros agentes.
@@ -162,6 +186,19 @@ public abstract class AlunoAgent extends Agent implements AlunoAgentInterface {
 		return nota;
 	}
 
+	public void setNota(int novaNota) {
+		this.notaAntiga = nota;
+		this.nota = novaNota;
+		
+	}
+	
+	public void setStatus(int novoStatus) {
+		this.statusAntigo = status;
+		this.status = novoStatus;
+		
+	}
+
+	
 	@Override
 	public int getAlunoStatus() {
 		return status;

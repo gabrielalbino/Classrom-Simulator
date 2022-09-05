@@ -40,10 +40,10 @@ public class AlunoNerdAgent extends AlunoAgent {
 
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							status = StatusAlunos.PRESTANDO_ATENCAO;
+							setStatus(StatusAlunos.PRESTANDO_ATENCAO);
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							status = getActionByChance(0.1, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO);
+							setStatus(getActionByChance(0.1, StatusAlunos.FORA_DA_SALA, StatusAlunos.PRESTANDO_ATENCAO));
 					}
 				} else {
 					block();

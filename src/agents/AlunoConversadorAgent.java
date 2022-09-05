@@ -39,10 +39,10 @@ public class AlunoConversadorAgent extends AlunoAgent {
 					int statusAula = Integer.parseInt(msg.getContent());
 					switch (statusAula) {
 						case StatusAula.CONTEUDO_INTERESSANTE:
-							status = getActionByChance(0.1, StatusAlunos.CONVERSANDO, StatusAlunos.PRESTANDO_ATENCAO);
+							setStatus(getActionByChance(0.1, StatusAlunos.CONVERSANDO, StatusAlunos.PRESTANDO_ATENCAO));
 							break;
 						case StatusAula.CONTEUDO_IRRELEVANTE:
-							status = getActionByChance(0.4, StatusAlunos.CONVERSANDO, StatusAlunos.PRESTANDO_ATENCAO);
+							setStatus(getActionByChance(0.4, StatusAlunos.CONVERSANDO, StatusAlunos.PRESTANDO_ATENCAO));
 					}
 				} else {
 					block();
